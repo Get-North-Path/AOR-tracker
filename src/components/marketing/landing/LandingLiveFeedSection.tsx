@@ -82,9 +82,9 @@ export function LandingLiveFeedSection() {
               
               {/* Right: Example Post */}
               <div className="relative z-10 w-full md:w-[320px] shrink-0 mt-6 md:mt-0">
-                {/* Example Badge */}
-                <div className="absolute -top-3 -right-3 md:-right-4 rotate-12 bg-blue-100 text-blue-800 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded shadow-sm z-20">
-                  Example
+                {/* Fun Sneak Peek Badge */}
+                <div className="absolute -top-3 -right-3 md:-right-4 rotate-12 bg-indigo-100 text-indigo-800 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-sm z-20">
+                  Sneak Peek 👀
                 </div>
                 
                 {/* Mock Card */}
