@@ -190,7 +190,9 @@ export function serializeCohort(
   if (!doc) {
     return emptyCohortStats(fallbackCohortKey);
   }
-  const c = doc as CohortStats & { last_updated?: Date };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _id, ...rest } = doc;
+  const c = rest as CohortStats & { last_updated?: Date };
   return {
     ...c,
     last_updated:
