@@ -139,8 +139,12 @@ export function LandingLiveFeedSection() {
               </div>
             </div>
           ) : currentPost ? (
-            <div className="mx-auto flex flex-col gap-4 max-w-[600px] min-h-[160px] justify-center">
+            <div className="mx-auto max-w-4xl relative overflow-hidden rounded-2xl bg-white border border-gray-100 shadow-lg flex flex-col md:flex-row items-center p-8 sm:p-14 gap-8 md:gap-14">
               <style suppressHydrationWarning>{`
+                @keyframes pulseGlow {
+                  0%, 100% { opacity: 0.1; transform: scale(1); }
+                  50% { opacity: 0.15; transform: scale(1.1); }
+                }
                 @keyframes cycleFeed {
                   0% { opacity: 0; transform: translateY(20px) scale(0.95); filter: blur(4px); }
                   8% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); }
@@ -148,38 +152,75 @@ export function LandingLiveFeedSection() {
                   100% { opacity: 0; transform: translateY(-20px) scale(0.95); filter: blur(4px); }
                 }
               `}</style>
-              <div
-                key={currentPost.id + currentIndex}
-                className="group relative rounded-2xl flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-white border border-gray-100 shadow-lg p-6 w-full"
-                style={{ animation: 'cycleFeed 4.5s ease-in-out forwards' }}
-              >
-                <div className="flex-1 w-full">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest rounded-md bg-[var(--navy)] text-white px-3 py-1 shadow-sm">
-                      {currentPost.msl}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[var(--green)]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)] animate-pulse"></span>
-                      Live
-                    </span>
-                  </div>
-                  <div className="text-lg font-bold text-slate-900 tracking-tight">
-                    {currentPost.name}
-                  </div>
-                  <div className="text-sm text-slate-500 font-medium mt-1">
-                    {currentPost.meta}
-                  </div>
+
+              {/* Glowing Background Spotlight */}
+              <div 
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none"
+                style={{ backgroundColor: "var(--green)", animation: "pulseGlow 8s ease-in-out infinite" }}
+              ></div>
+
+              {/* Faint dot grid background with fade mask */}
+              <div 
+                className="absolute inset-0 z-0 opacity-40 pointer-events-none" 
+                style={{ 
+                  backgroundImage: 'radial-gradient(#94a3b8 1px, transparent 1px)', 
+                  backgroundSize: '20px 20px',
+                  maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 80%)',
+                  WebkitMaskImage: 'radial-gradient(ellipse at center, black 30%, transparent 80%)'
+                }}
+              ></div>
+              
+              {/* Left: Message */}
+              <div className="relative z-10 flex-1 flex flex-col items-center md:items-start text-center md:text-left">
+                <div className="inline-flex items-center justify-center gap-2 px-3 py-1 mb-6 rounded-full bg-white border border-gray-100 text-[10px] font-bold text-gray-500 uppercase tracking-widest shadow-sm">
+                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                  Live Data Stream
                 </div>
-                {days && (
-                  <div className="text-left sm:text-right shrink-0 sm:border-l border-t sm:border-t-0 border-gray-100 pt-4 sm:pt-0 sm:pl-6 w-full sm:w-auto mt-2 sm:mt-0">
-                    <div className="text-3xl font-black text-[var(--green)] tracking-tighter">
-                      {days} <span className="text-sm font-bold text-slate-400 tracking-normal">days</span>
+
+                <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-[var(--t1)] tracking-tight mb-4 leading-tight">
+                  Live updates.<br className="hidden md:block"/> Streaming now.
+                </h3>
+                
+                <p className="text-[var(--t2)] text-base md:text-lg leading-relaxed max-w-sm">
+                  Watch as Express Entry applicants report their latest processing milestones in real-time.
+                </p>
+              </div>
+              
+              {/* Right: Active Post Carousel */}
+              <div className="relative z-10 w-full md:w-[360px] shrink-0 mt-8 md:mt-0 perspective-1000 min-h-[160px] flex items-center justify-center">
+                <div
+                  key={currentPost.id + currentIndex}
+                  className="group relative rounded-2xl flex flex-col gap-3 justify-between items-start bg-white/90 backdrop-blur-md border border-white/50 shadow-2xl p-6 w-full cursor-default"
+                  style={{ animation: 'cycleFeed 4.5s ease-in-out forwards' }}
+                >
+                  <div className="w-full">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-[10px] font-extrabold uppercase tracking-widest rounded-md bg-[var(--navy)] text-white px-3 py-1 shadow-sm">
+                        {currentPost.msl}
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[var(--green)]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)] animate-pulse"></span>
+                        Live
+                      </span>
                     </div>
-                    <div className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mt-1">
-                      Since AOR
+                    <div className="text-lg font-bold text-slate-900 tracking-tight">
+                      {currentPost.name}
+                    </div>
+                    <div className="text-sm text-slate-500 font-medium mt-1">
+                      {currentPost.meta}
                     </div>
                   </div>
-                )}
+                  {days && (
+                    <div className="text-left mt-3 pt-3 border-t border-slate-100 w-full">
+                      <div className="text-3xl font-black text-[var(--green)] tracking-tighter">
+                        {days} <span className="text-sm font-bold text-slate-400 tracking-normal">days</span>
+                      </div>
+                      <div className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mt-1">
+                        Since AOR
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           ) : null}
