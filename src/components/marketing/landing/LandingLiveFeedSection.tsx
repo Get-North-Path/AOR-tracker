@@ -57,20 +57,34 @@ export function LandingLiveFeedSection() {
               Loading live events...
             </div>
           ) : feed.length === 0 ? (
-            <div className="relative rounded-xl overflow-hidden p-10 flex flex-col items-center justify-center text-center bg-white border border-gray-100 shadow-sm">
-              {/* Floating Example Badges */}
-              <div className="flex flex-wrap justify-center gap-3 mb-6 select-none opacity-60">
-                <span className="text-xs font-bold uppercase tracking-wider rounded-full bg-[var(--navy)] text-white px-4 py-1.5 shadow-sm">eCOPR received</span>
-                <span className="text-xs font-bold uppercase tracking-wider rounded-full bg-[var(--green)] text-white px-4 py-1.5 shadow-sm">Medical Passed</span>
-                <span className="text-xs font-bold uppercase tracking-wider rounded-full bg-gray-500 text-white px-4 py-1.5 shadow-sm">BGC Started</span>
-              </div>
+            <div className="relative overflow-hidden rounded-2xl bg-white border border-gray-200 shadow-sm p-12 sm:p-16 flex flex-col items-center justify-center text-center">
+              {/* Subtle Dot Grid Background */}
+              <div 
+                className="absolute inset-0 z-0 opacity-[0.03]" 
+                style={{ 
+                  backgroundImage: 'radial-gradient(circle at 2px 2px, black 1px, transparent 0)', 
+                  backgroundSize: '24px 24px' 
+                }}
+              ></div>
               
-              <h3 className="text-xl font-bold text-[var(--t1)] mb-3">
-                Quiet right now   check back soon
-              </h3>
-              <p className="text-[var(--t2)] max-w-md text-sm leading-relaxed">
-                When community members report their Express Entry milestones, they stream here in real-time. Check back later to see the latest PR timelines and processing updates!
-              </p>
+              <div className="relative z-10 flex flex-col items-center">
+                {/* Pulsing Live Indicator */}
+                <div className="relative flex h-16 w-16 items-center justify-center mb-6">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-20" style={{ backgroundColor: "var(--green)" }}></span>
+                  <div className="relative flex items-center justify-center h-16 w-16 rounded-full" style={{ backgroundColor: "rgba(93, 228, 148, 0.15)", color: "var(--green)" }}>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                    </svg>
+                  </div>
+                </div>
+                
+                <h3 className="text-xl sm:text-2xl font-bold mb-3 tracking-tight" style={{ color: "var(--t1)" }}>
+                  Listening for live updates...
+                </h3>
+                <p className="max-w-md text-sm sm:text-base leading-relaxed" style={{ color: "var(--t2)" }}>
+                  When community members report their Express Entry milestones (like PPRs and Medicals), they will stream here in real-time. Check back soon!
+                </p>
+              </div>
             </div>
           ) : (
             feed.map((post, idx) => {
