@@ -126,23 +126,26 @@ export function LandingLiveFeedSection() {
               </div>
             </div>
           ) : (
-            <div className="mx-auto max-w-[600px] relative h-[500px] overflow-hidden rounded-3xl" style={{ padding: "20px 10px" }}>
-              {/* Blur Overlay for Top and Bottom */}
+            <div 
+              className="mx-auto max-w-[640px] relative h-[560px] overflow-hidden rounded-[2.5rem] bg-gradient-to-b from-slate-50/80 to-slate-100/50 border border-slate-200/60 shadow-[inset_0_2px_20px_rgba(0,0,0,0.02)]" 
+              style={{ padding: "40px 16px" }}
+            >
+              {/* Cinematic Blur Overlay for Top and Bottom */}
               <div 
                 className="absolute inset-0 z-20 pointer-events-none" 
                 style={{ 
-                  backdropFilter: 'blur(6px)', 
-                  WebkitBackdropFilter: 'blur(6px)',
-                  maskImage: 'linear-gradient(to bottom, black 0%, transparent 25%, transparent 75%, black 100%)', 
-                  WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 25%, transparent 75%, black 100%)',
-                  background: 'linear-gradient(to bottom, rgba(250,250,249,0.8) 0%, transparent 25%, transparent 75%, rgba(250,250,249,0.8) 100%)'
+                  backdropFilter: 'blur(8px)', 
+                  WebkitBackdropFilter: 'blur(8px)',
+                  maskImage: 'linear-gradient(to bottom, black 0%, transparent 20%, transparent 80%, black 100%)', 
+                  WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 20%, transparent 80%, black 100%)',
+                  background: 'linear-gradient(to bottom, rgba(248,250,252,0.9) 0%, transparent 20%, transparent 80%, rgba(248,250,252,0.9) 100%)'
                 }}
               ></div>
 
               <style suppressHydrationWarning>{`
                 @keyframes verticalMarquee {
                   0% { transform: translateY(0); }
-                  100% { transform: translateY(-50%); } /* Scroll exactly half the duplicated content */
+                  100% { transform: translateY(-50%); }
                 }
                 .marquee-container:hover {
                   animation-play-state: paused;
@@ -150,8 +153,8 @@ export function LandingLiveFeedSection() {
               `}</style>
               
               <div 
-                className="flex flex-col gap-6 marquee-container" 
-                style={{ animation: 'verticalMarquee 20s linear infinite' }}
+                className="flex flex-col gap-5 marquee-container px-2 sm:px-6" 
+                style={{ animation: 'verticalMarquee 25s linear infinite' }}
               >
                 {[...feed, ...feed, ...feed, ...feed].map((post, idx) => {
                   const days = getDaysSinceAOR(post);
