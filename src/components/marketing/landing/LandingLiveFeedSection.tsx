@@ -126,61 +126,77 @@ export function LandingLiveFeedSection() {
               </div>
             </div>
           ) : (
-            <div className="mx-auto flex flex-col gap-5 max-w-[600px] relative">
+            <div className="mx-auto max-w-[600px] relative h-[500px] overflow-hidden rounded-3xl" style={{ padding: "20px 10px" }}>
+              {/* Blur Overlay for Top and Bottom */}
+              <div 
+                className="absolute inset-0 z-20 pointer-events-none" 
+                style={{ 
+                  backdropFilter: 'blur(6px)', 
+                  WebkitBackdropFilter: 'blur(6px)',
+                  maskImage: 'linear-gradient(to bottom, black 0%, transparent 25%, transparent 75%, black 100%)', 
+                  WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 25%, transparent 75%, black 100%)',
+                  background: 'linear-gradient(to bottom, rgba(250,250,249,0.8) 0%, transparent 25%, transparent 75%, rgba(250,250,249,0.8) 100%)'
+                }}
+              ></div>
+
               <style suppressHydrationWarning>{`
-                @keyframes blurSlideUp {
-                  0% { opacity: 0; transform: translateY(40px) scale(0.96); filter: blur(10px); }
-                  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); }
+                @keyframes verticalMarquee {
+                  0% { transform: translateY(0); }
+                  100% { transform: translateY(-50%); } /* Scroll exactly half the duplicated content */
+                }
+                .marquee-container:hover {
+                  animation-play-state: paused;
                 }
               `}</style>
               
-              {feed.map((post, idx) => {
-                const days = getDaysSinceAOR(post);
-                const isNewest = idx === 0;
+              <div 
+                className="flex flex-col gap-6 marquee-container" 
+                style={{ animation: 'verticalMarquee 20s linear infinite' }}
+              >
+                {[...feed, ...feed, ...feed, ...feed].map((post, idx) => {
+                  const days = getDaysSinceAOR(post);
+                  const isOriginalFirst = idx === 0;
 
-                return (
-                  <div
-                    key={post.id}
-                    className={`group relative z-10 rounded-2xl flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-white border hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 p-6 ${
-                      isNewest ? 'border-green-200 shadow-lg shadow-green-100/40' : 'border-gray-100 shadow-sm'
-                    }`}
-                    style={{
-                      animation: 'blurSlideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both',
-                      animationDelay: `${idx * 0.15}s`,
-                    }}
-                  >
-                    <div className="flex-1 w-full">
-                      <div className="flex items-center gap-3 mb-3">
-                        <span className="text-[10px] font-extrabold uppercase tracking-widest rounded-md bg-[var(--navy)] text-white px-3 py-1 shadow-sm">
-                          {post.msl}
-                        </span>
-                        {isNewest && (
-                          <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[var(--green)]">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)] animate-pulse"></span>
-                            New
+                  return (
+                    <div
+                      key={`${post.id}-${idx}`}
+                      className={`group relative z-10 rounded-2xl flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-white border hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 p-6 ${
+                        isOriginalFirst ? 'border-green-200 shadow-md shadow-green-100/30' : 'border-gray-100 shadow-sm'
+                      }`}
+                    >
+                      <div className="flex-1 w-full">
+                        <div className="flex items-center gap-3 mb-3">
+                          <span className="text-[10px] font-extrabold uppercase tracking-widest rounded-md bg-[var(--navy)] text-white px-3 py-1 shadow-sm">
+                            {post.msl}
                           </span>
-                        )}
+                          {isOriginalFirst && (
+                            <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[var(--green)]">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)] animate-pulse"></span>
+                              New
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-lg font-bold text-slate-900 tracking-tight">
+                          {post.name}
+                        </div>
+                        <div className="text-sm text-slate-500 font-medium mt-1">
+                          {post.meta}
+                        </div>
                       </div>
-                      <div className="text-lg font-bold text-slate-900 tracking-tight">
-                        {post.name}
-                      </div>
-                      <div className="text-sm text-slate-500 font-medium mt-1">
-                        {post.meta}
-                      </div>
+                      {days && (
+                        <div className="text-left sm:text-right shrink-0 sm:border-l border-t sm:border-t-0 border-gray-100 pt-4 sm:pt-0 sm:pl-6 w-full sm:w-auto mt-2 sm:mt-0 transition-colors duration-300 group-hover:border-gray-200">
+                          <div className="text-3xl font-black text-[var(--green)] tracking-tighter">
+                            {days} <span className="text-sm font-bold text-slate-400 tracking-normal">days</span>
+                          </div>
+                          <div className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mt-1">
+                            Since AOR
+                          </div>
+                        </div>
+                      )}
                     </div>
-                    {days && (
-                      <div className="text-left sm:text-right shrink-0 sm:border-l border-t sm:border-t-0 border-gray-100 pt-4 sm:pt-0 sm:pl-6 w-full sm:w-auto mt-2 sm:mt-0 transition-colors duration-300 group-hover:border-gray-200">
-                        <div className="text-3xl font-black text-[var(--green)] tracking-tighter">
-                          {days} <span className="text-sm font-bold text-slate-400 tracking-normal">days</span>
-                        </div>
-                        <div className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mt-1">
-                          Since AOR
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
           )}
         </div>
