@@ -47,14 +47,31 @@ function dateForMilestone(
   return milestoneDate(p.milestones, key);
 }
 
-function meanRounded(values: number[]): number {
+/**
+ * Median segment gap (rounded). Processing-time gaps are right-skewed   a few
+ * stuck applicants (e.g. long background checks) drag a mean upward and inflate
+ * the "typical" estimate for everyone. The median is robust to those outliers,
+ * matching the percentile approach the cohort engine already uses
+ * (`weightedPercentile` in cohort-algorithm-v2.ts).
+ */
+function medianRounded(values: number[]): number {
   if (values.length === 0) return 0;
-  return Math.round(values.reduce((a, b) => a + b, 0) / values.length);
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  const med =
+    sorted.length % 2 === 0
+      ? (sorted[mid - 1]! + sorted[mid]!) / 2
+      : sorted[mid]!;
+  return Math.round(med);
 }
 
 /**
- * Average inter-milestone gaps from seeded profiles only (global table).
+ * Median inter-milestone gaps from seeded profiles only (global table).
  * Inspired by aortrack-backend milestone pace spec.
+ *
+ * Note: the result keys (`segment_avg_days`, `cumulative_avg_days`,
+ * `total_avg_days_to_ecopr`) retain their `_avg_` names for back-compat with
+ * already-persisted `milestone_pace` docs; the values are now medians, not means.
  */
 export function computeGlobalSeededMilestonePace(
   profiles: ProfileForMilestonePace[],
@@ -75,7 +92,7 @@ export function computeGlobalSeededMilestonePace(
     }
     segment_n[key] = gaps.length;
     if (gaps.length >= MIN_SEGMENT_N) {
-      segment_avg_days[key] = meanRounded(gaps);
+      segment_avg_days[key] = medianRounded(gaps);
     }
   }
 
@@ -182,7 +199,7 @@ export function milestoneEstimatesFromPace(
     }
     out[key] = {
       estLabel: `~${formatEstDateFromAor(aorDate, row.daysAfterAor)}`,
-      desc: `Typical ~${row.daysAfterAor}d after AOR (avg gaps from ${n} profiles on AOR Track).`,
+      desc: `Typical ~${row.daysAfterAor}d after AOR (median gaps from ${n} profiles on AOR Track).`,
       available: true,
     };
   }
