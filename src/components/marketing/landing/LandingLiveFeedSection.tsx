@@ -57,48 +57,73 @@ export function LandingLiveFeedSection() {
               Loading live events...
             </div>
           ) : feed.length === 0 ? (
-            <div className="relative overflow-hidden rounded-2xl bg-white border border-gray-200 shadow-sm flex flex-col md:flex-row items-center p-8 sm:p-12 gap-10">
-              {/* Faint dot grid background */}
+            <div className="relative overflow-hidden rounded-2xl bg-white border border-gray-100 shadow-lg flex flex-col md:flex-row items-center p-8 sm:p-14 gap-10">
+              <style suppressHydrationWarning>{`
+                @keyframes floatCard {
+                  0%, 100% { transform: translateY(0px) rotate(-3deg); }
+                  50% { transform: translateY(-12px) rotate(-1deg); }
+                }
+                @keyframes pulseGlow {
+                  0%, 100% { opacity: 0.1; transform: scale(1); }
+                  50% { opacity: 0.15; transform: scale(1.1); }
+                }
+              `}</style>
+
+              {/* Glowing Background Spotlight */}
               <div 
-                className="absolute inset-0 z-0 opacity-40" 
-                style={{ backgroundImage: 'radial-gradient(#e5e7eb 1px, transparent 1px)', backgroundSize: '16px 16px' }}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none"
+                style={{ backgroundColor: "var(--green)", animation: "pulseGlow 8s ease-in-out infinite" }}
+              ></div>
+
+              {/* Faint dot grid background with fade mask */}
+              <div 
+                className="absolute inset-0 z-0 opacity-40 pointer-events-none" 
+                style={{ 
+                  backgroundImage: 'radial-gradient(#94a3b8 1px, transparent 1px)', 
+                  backgroundSize: '20px 20px',
+                  maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 80%)',
+                  WebkitMaskImage: 'radial-gradient(ellipse at center, black 30%, transparent 80%)'
+                }}
               ></div>
               
               {/* Left: Message */}
               <div className="relative z-10 flex-1 flex flex-col items-center md:items-start text-center md:text-left">
-                <div className="inline-flex items-center justify-center gap-2 px-3 py-1 mb-6 rounded-full bg-gray-50 border border-gray-200 text-[10px] font-bold text-gray-500 uppercase tracking-widest shadow-sm">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-pulse"></span>
-                  Live Feed
+                <div className="inline-flex items-center justify-center gap-2 px-3 py-1 mb-6 rounded-full bg-white border border-gray-100 text-[10px] font-bold text-gray-500 uppercase tracking-widest shadow-sm">
+                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                  Live Data Stream
                 </div>
 
-                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mb-4 leading-tight">
+                <h3 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight mb-4 leading-tight">
                   Quiet right now.<br className="hidden md:block"/> Check back soon.
                 </h3>
                 
-                <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-sm">
+                <p className="text-slate-600 text-base leading-relaxed max-w-sm">
                   When community members report their Express Entry milestones, they stream here in real-time.
                 </p>
               </div>
               
               {/* Right: Example Post */}
-              <div className="relative z-10 w-full md:w-[320px] shrink-0 mt-6 md:mt-0">
-                {/* Fun Sneak Peek Badge */}
-                <div className="absolute -top-3 -right-3 md:-right-4 rotate-12 bg-indigo-100 text-indigo-800 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-sm z-20">
-                  Sneak Peek 👀
-                </div>
-                
-                {/* Mock Card */}
-                <div className="rounded-xl flex flex-col gap-3 justify-between items-start bg-white border border-gray-200 shadow-md p-5 opacity-90 rotate-[-2deg] transition-transform hover:rotate-0 duration-300 cursor-default">
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-[10px] font-bold uppercase tracking-wider rounded bg-[var(--navy)] text-white px-2 py-0.5">eCOPR received</span>
-                    </div>
-                    <div className="text-sm font-semibold text-slate-900">Applicant #4821</div>
-                    <div className="text-xs text-slate-500 mt-1">CEC · Feb 20 AOR · Inland</div>
+              <div className="relative z-10 w-full md:w-[340px] shrink-0 mt-6 md:mt-0 perspective-1000">
+                {/* Mock Card with Floating Animation */}
+                <div 
+                  className="relative rounded-2xl flex flex-col gap-3 justify-between items-start bg-white/80 backdrop-blur-md border border-white/50 shadow-2xl p-6 cursor-default transition-all duration-300"
+                  style={{ animation: 'floatCard 6s ease-in-out infinite' }}
+                >
+                  {/* Fun Sneak Peek Badge */}
+                  <div className="absolute -top-4 -right-4 bg-indigo-500 text-white text-[10px] font-extrabold uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg z-20 transform rotate-12">
+                    Sneak Peek 👀
                   </div>
-                  <div className="text-left mt-2">
-                    <div className="text-2xl font-black text-[var(--green)]">172 <span className="text-sm font-medium text-slate-500">days</span></div>
-                    <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-0.5">Since AOR</div>
+
+                  <div>
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-[10px] font-bold uppercase tracking-wider rounded-md bg-[var(--navy)] text-white px-2.5 py-1 shadow-sm">eCOPR received</span>
+                    </div>
+                    <div className="text-base font-bold text-slate-900">Applicant #4821</div>
+                    <div className="text-xs text-slate-500 mt-1 font-medium">CEC · Feb 20 AOR · Inland</div>
+                  </div>
+                  <div className="text-left mt-3 pt-3 border-t border-slate-100 w-full">
+                    <div className="text-3xl font-black text-[var(--green)]">172 <span className="text-sm font-bold text-slate-400">days</span></div>
+                    <div className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mt-1">Since AOR</div>
                   </div>
                 </div>
               </div>
