@@ -64,11 +64,17 @@ export function LandingLiveFeedSection() {
                   0%, 100% { opacity: 0.1; transform: scale(1); }
                   50% { opacity: 0.15; transform: scale(1.1); }
                 }
+                @media (prefers-reduced-motion: reduce) {
+                  .motion-safe-animate-none {
+                    animation: none !important;
+                    transform: none !important;
+                  }
+                }
               `}</style>
 
               {/* Glowing Background Spotlight */}
               <div 
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none motion-safe-animate-none"
                 style={{ backgroundColor: "var(--green)", animation: "pulseGlow 8s ease-in-out infinite" }}
               ></div>
 
@@ -103,7 +109,7 @@ export function LandingLiveFeedSection() {
               <div className="relative z-10 w-full md:w-[340px] shrink-0 mt-8 md:mt-0 perspective-1000">
                 {/* Mock Card with Floating Animation */}
                 <div 
-                  className="relative rounded-2xl flex flex-col gap-3 justify-between items-start bg-white/80 backdrop-blur-md border border-white/50 shadow-2xl p-6 cursor-default transition-all duration-300"
+                  className="relative rounded-2xl flex flex-col gap-3 justify-between items-start bg-white/80 backdrop-blur-md border border-white/50 shadow-2xl p-6 cursor-default transition-all duration-300 motion-safe-animate-none"
                   style={{ animation: 'floatCard 6s ease-in-out infinite' }}
                 >
                   {/* Fun Sneak Peek Badge */}
@@ -150,11 +156,19 @@ export function LandingLiveFeedSection() {
                 .marquee-container:hover {
                   animation-play-state: paused;
                 }
+                @media (prefers-reduced-motion: reduce) {
+                  .marquee-container {
+                    animation: none !important;
+                    transform: none !important;
+                  }
+                  .animate-pulse {
+                    animation: none !important;
+                  }
+                }
               `}</style>
               
               <div 
-                className="flex flex-col gap-5 marquee-container px-2 sm:px-6" 
-                style={{ animation: 'verticalMarquee 25s linear infinite' }}
+                className="flex flex-col gap-5 marquee-container px-2 sm:px-6 motion-safe:animate-[verticalMarquee_25s_linear_infinite]" 
               >
                 {[...feed, ...feed, ...feed, ...feed].map((post, idx) => {
                   const days = getDaysSinceAOR(post);
