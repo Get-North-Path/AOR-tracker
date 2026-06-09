@@ -133,61 +133,40 @@ export function LandingLiveFeedSection() {
                 return (
                   <div
                     key={post.id}
-                    className="rounded flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center motion-safe:animate-[fadeInUp_0.4s_ease-out_both]"
-                    style={{
-                      backgroundColor: "var(--w)",
-                      border: "1px solid var(--b2)",
-                      padding: "16px 20px",
-                      animationDelay: `${idx * 0.1}s`,
-                    }}
+                    className="group relative rounded-2xl flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-6 motion-safe:animate-[fadeInUp_0.4s_ease-out_both]"
+                    style={{ animationDelay: `${idx * 0.1}s` }}
                   >
                     <style suppressHydrationWarning>{`
                       @keyframes fadeInUp {
-                        from { opacity: 0; transform: translateY(10px); }
+                        from { opacity: 0; transform: translateY(15px); }
                         to { opacity: 1; transform: translateY(0); }
                       }
                     `}</style>
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span
-                          className="text-xs font-bold uppercase tracking-wider rounded"
-                          style={{
-                            backgroundColor: "var(--navy)",
-                            color: "#fff",
-                            padding: "2px 6px",
-                          }}
-                        >
+                    <div className="flex-1 w-full">
+                      <div className="flex items-center gap-3 mb-3">
+                        <span className="text-[10px] font-extrabold uppercase tracking-widest rounded-md bg-[var(--navy)] text-white px-3 py-1 shadow-sm">
                           {post.msl}
                         </span>
-                        <span
-                          className="text-sm font-semibold"
-                          style={{ color: "var(--t1)" }}
-                        >
-                          {post.name}
-                        </span>
+                        {idx === 0 && (
+                          <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[var(--green)]">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)] animate-pulse"></span>
+                            New
+                          </span>
+                        )}
                       </div>
-                      <div className="text-sm" style={{ color: "var(--t2)" }}>
+                      <div className="text-lg font-bold text-slate-900 tracking-tight">
+                        {post.name}
+                      </div>
+                      <div className="text-sm text-slate-500 font-medium mt-1">
                         {post.meta}
                       </div>
                     </div>
                     {days && (
-                      <div className="text-right shrink-0">
-                        <div
-                          className="text-xl font-bold"
-                          style={{ color: "var(--green)" }}
-                        >
-                          {days}{" "}
-                          <span
-                            className="text-sm font-medium"
-                            style={{ color: "var(--t2)" }}
-                          >
-                            days
-                          </span>
+                      <div className="text-left sm:text-right shrink-0 sm:border-l border-t sm:border-t-0 border-gray-100 pt-4 sm:pt-0 sm:pl-6 w-full sm:w-auto mt-2 sm:mt-0">
+                        <div className="text-3xl font-black text-[var(--green)] tracking-tighter">
+                          {days} <span className="text-sm font-bold text-slate-400 tracking-normal">days</span>
                         </div>
-                        <div
-                          className="text-xs uppercase tracking-wide"
-                          style={{ color: "var(--t2)" }}
-                        >
+                        <div className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mt-1">
                           Since AOR
                         </div>
                       </div>
