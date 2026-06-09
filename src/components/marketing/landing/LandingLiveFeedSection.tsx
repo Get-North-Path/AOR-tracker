@@ -57,55 +57,20 @@ export function LandingLiveFeedSection() {
               Loading live events...
             </div>
           ) : feed.length === 0 ? (
-            <div className="relative rounded overflow-hidden" style={{ border: "1px dashed var(--b2)", backgroundColor: "var(--bg)" }}>
-              {/* Blurred fake background posts */}
-              <div className="opacity-30 blur-[2px] pointer-events-none flex flex-col gap-4 p-4">
-                <div className="rounded flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-white border border-gray-100 p-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs font-bold uppercase tracking-wider rounded bg-[var(--navy)] text-white px-2 py-0.5">eCOPR received</span>
-                      <span className="text-sm font-semibold text-[var(--t1)]">Applicant #4821</span>
-                    </div>
-                    <div className="text-sm text-[var(--t2)]">CEC · Feb 20 AOR · Inland</div>
-                  </div>
-                  <div className="text-right shrink-0">
-                    <div className="text-xl font-bold text-[var(--green)]">172 <span className="text-sm font-medium text-[var(--t2)]">days</span></div>
-                    <div className="text-xs uppercase tracking-wide text-[var(--t2)]">Since AOR</div>
-                  </div>
-                </div>
-                
-                <div className="rounded flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-white border border-gray-100 p-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs font-bold uppercase tracking-wider rounded bg-[var(--navy)] text-white px-2 py-0.5">BGC Started</span>
-                      <span className="text-sm font-semibold text-[var(--t1)]">Applicant #5107</span>
-                    </div>
-                    <div className="text-sm text-[var(--t2)]">CEC · Feb 28 AOR · Outland</div>
-                  </div>
-                  <div className="text-right shrink-0">
-                    <div className="text-xl font-bold text-[var(--green)]">61 <span className="text-sm font-medium text-[var(--t2)]">days</span></div>
-                    <div className="text-xs uppercase tracking-wide text-[var(--t2)]">Since AOR</div>
-                  </div>
-                </div>
+            <div className="relative rounded-xl overflow-hidden p-10 flex flex-col items-center justify-center text-center bg-white border border-gray-100 shadow-sm">
+              {/* Floating Example Badges */}
+              <div className="flex flex-wrap justify-center gap-3 mb-6 select-none opacity-60">
+                <span className="text-xs font-bold uppercase tracking-wider rounded-full bg-[var(--navy)] text-white px-4 py-1.5 shadow-sm">eCOPR received</span>
+                <span className="text-xs font-bold uppercase tracking-wider rounded-full bg-[var(--green)] text-white px-4 py-1.5 shadow-sm">Medical Passed</span>
+                <span className="text-xs font-bold uppercase tracking-wider rounded-full bg-gray-500 text-white px-4 py-1.5 shadow-sm">BGC Started</span>
               </div>
               
-              {/* Overlay Message */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
-                <div 
-                  className="rounded-full flex items-center justify-center bg-white shadow-sm mb-3" 
-                  style={{ width: 48, height: 48, color: "var(--t2)" }}
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                  </svg>
-                </div>
-                <div className="font-bold text-base text-center bg-white/90 px-3 py-1 rounded" style={{ color: "var(--t1)" }}>
-                  Quiet right now   check back soon
-                </div>
-                <div className="text-sm mt-2 text-center bg-white/90 px-3 py-1 rounded" style={{ color: "var(--t2)", maxWidth: "320px" }}>
-                  Live community milestone updates will stream here in real-time.
-                </div>
-              </div>
+              <h3 className="text-xl font-bold text-[var(--t1)] mb-3">
+                Quiet right now   check back soon
+              </h3>
+              <p className="text-[var(--t2)] max-w-md text-sm leading-relaxed">
+                When community members report their Express Entry milestones, they stream here in real-time. Check back later to see the latest PR timelines and processing updates!
+              </p>
             </div>
           ) : (
             feed.map((post, idx) => {
