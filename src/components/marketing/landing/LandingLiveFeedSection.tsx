@@ -58,14 +58,28 @@ export function LandingLiveFeedSection() {
             </div>
           ) : feed.length === 0 ? (
             <div
-              className="text-center py-8 rounded"
+              className="text-center py-12 px-4 rounded flex flex-col items-center gap-3"
               style={{
-                color: "var(--t2)",
                 backgroundColor: "var(--w)",
-                border: "1px solid var(--b2)",
+                border: "1px dashed var(--b2)",
               }}
             >
-              Quiet right now   check back soon
+              <div 
+                className="rounded-full flex items-center justify-center" 
+                style={{ width: 48, height: 48, backgroundColor: "var(--bg)", color: "var(--t2)" }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </div>
+              <div>
+                <div className="font-bold text-base" style={{ color: "var(--t1)" }}>
+                  Quiet right now   check back soon
+                </div>
+                <div className="text-sm mt-1.5 mx-auto" style={{ color: "var(--t2)", maxWidth: "320px" }}>
+                  Live community milestone updates (like PPRs, BGCs, and Medicals) will stream here in real-time.
+                </div>
+              </div>
             </div>
           ) : (
             feed.map((post, idx) => {
