@@ -48,16 +48,13 @@ export function LandingLiveFeedSection() {
           See the latest milestones as they happen.
         </h2>
 
-        <div
-          className="mx-auto flex flex-col gap-4"
-          style={{ maxWidth: "600px" }}
-        >
+        <div className="mx-auto w-full px-4">
           {loading ? (
             <div className="text-center py-8" style={{ color: "var(--t2)" }}>
               Loading live events...
             </div>
           ) : feed.length === 0 ? (
-            <div className="relative overflow-hidden rounded-2xl bg-white border border-gray-100 shadow-lg flex flex-col md:flex-row items-center p-8 sm:p-14 gap-10">
+            <div className="mx-auto max-w-4xl relative overflow-hidden rounded-2xl bg-white border border-gray-100 shadow-lg flex flex-col md:flex-row items-center p-8 sm:p-14 gap-8 md:gap-14">
               <style suppressHydrationWarning>{`
                 @keyframes floatCard {
                   0%, 100% { transform: translateY(0px) rotate(-3deg); }
@@ -93,17 +90,17 @@ export function LandingLiveFeedSection() {
                   Live Data Stream
                 </div>
 
-                <h3 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight mb-4 leading-tight">
+                <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight mb-4 leading-tight">
                   Quiet right now.<br className="hidden md:block"/> Check back soon.
                 </h3>
                 
-                <p className="text-slate-600 text-base leading-relaxed max-w-sm">
+                <p className="text-slate-600 text-base md:text-lg leading-relaxed max-w-sm">
                   When community members report their Express Entry milestones, they stream here in real-time.
                 </p>
               </div>
               
               {/* Right: Example Post */}
-              <div className="relative z-10 w-full md:w-[340px] shrink-0 mt-6 md:mt-0 perspective-1000">
+              <div className="relative z-10 w-full md:w-[340px] shrink-0 mt-8 md:mt-0 perspective-1000">
                 {/* Mock Card with Floating Animation */}
                 <div 
                   className="relative rounded-2xl flex flex-col gap-3 justify-between items-start bg-white/80 backdrop-blur-md border border-white/50 shadow-2xl p-6 cursor-default transition-all duration-300"
@@ -129,74 +126,76 @@ export function LandingLiveFeedSection() {
               </div>
             </div>
           ) : (
-            feed.map((post, idx) => {
-              const days = getDaysSinceAOR(post);
+            <div className="mx-auto flex flex-col gap-4 max-w-[600px]">
+              {feed.map((post, idx) => {
+                const days = getDaysSinceAOR(post);
 
-              return (
-                <div
-                  key={post.id}
-                  className="rounded flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center motion-safe:animate-[fadeInUp_0.4s_ease-out_both]"
-                  style={{
-                    backgroundColor: "var(--w)",
-                    border: "1px solid var(--b2)",
-                    padding: "16px 20px",
-                    animationDelay: `${idx * 0.1}s`,
-                  }}
-                >
-                  <style suppressHydrationWarning>{`
-                    @keyframes fadeInUp {
-                      from { opacity: 0; transform: translateY(10px); }
-                      to { opacity: 1; transform: translateY(0); }
-                    }
-                  `}</style>
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span
-                        className="text-xs font-bold uppercase tracking-wider rounded"
-                        style={{
-                          backgroundColor: "var(--navy)",
-                          color: "#fff",
-                          padding: "2px 6px",
-                        }}
-                      >
-                        {post.msl}
-                      </span>
-                      <span
-                        className="text-sm font-semibold"
-                        style={{ color: "var(--t1)" }}
-                      >
-                        {post.name}
-                      </span>
-                    </div>
-                    <div className="text-sm" style={{ color: "var(--t2)" }}>
-                      {post.meta}
-                    </div>
-                  </div>
-                  {days && (
-                    <div className="text-right shrink-0">
-                      <div
-                        className="text-xl font-bold"
-                        style={{ color: "var(--green)" }}
-                      >
-                        {days}{" "}
+                return (
+                  <div
+                    key={post.id}
+                    className="rounded flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center motion-safe:animate-[fadeInUp_0.4s_ease-out_both]"
+                    style={{
+                      backgroundColor: "var(--w)",
+                      border: "1px solid var(--b2)",
+                      padding: "16px 20px",
+                      animationDelay: `${idx * 0.1}s`,
+                    }}
+                  >
+                    <style suppressHydrationWarning>{`
+                      @keyframes fadeInUp {
+                        from { opacity: 0; transform: translateY(10px); }
+                        to { opacity: 1; transform: translateY(0); }
+                      }
+                    `}</style>
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
                         <span
-                          className="text-sm font-medium"
-                          style={{ color: "var(--t2)" }}
+                          className="text-xs font-bold uppercase tracking-wider rounded"
+                          style={{
+                            backgroundColor: "var(--navy)",
+                            color: "#fff",
+                            padding: "2px 6px",
+                          }}
                         >
-                          days
+                          {post.msl}
+                        </span>
+                        <span
+                          className="text-sm font-semibold"
+                          style={{ color: "var(--t1)" }}
+                        >
+                          {post.name}
                         </span>
                       </div>
-                      <div
-                        className="text-xs uppercase tracking-wide"
-                        style={{ color: "var(--t2)" }}
-                      >
-                        Since AOR
+                      <div className="text-sm" style={{ color: "var(--t2)" }}>
+                        {post.meta}
                       </div>
                     </div>
-                  )}
-                </div>
-              );
-            })
+                    {days && (
+                      <div className="text-right shrink-0">
+                        <div
+                          className="text-xl font-bold"
+                          style={{ color: "var(--green)" }}
+                        >
+                          {days}{" "}
+                          <span
+                            className="text-sm font-medium"
+                            style={{ color: "var(--t2)" }}
+                          >
+                            days
+                          </span>
+                        </div>
+                        <div
+                          className="text-xs uppercase tracking-wide"
+                          style={{ color: "var(--t2)" }}
+                        >
+                          Since AOR
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           )}
         </div>
       </div>
