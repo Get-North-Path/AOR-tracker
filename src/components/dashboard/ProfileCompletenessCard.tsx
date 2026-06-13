@@ -70,6 +70,11 @@ export function ProfileCompletenessCard({
         toast.show("AOR date is required");
         return;
       }
+      const today = new Date().toISOString().split("T")[0];
+      if (next.aorDate > today) {
+        toast.show("AOR date cannot be in the future");
+        return;
+      }
       if (!next.stream || !next.type || !next.province) {
         toast.show("Please fill stream, type, and province");
         return;
@@ -91,8 +96,13 @@ export function ProfileCompletenessCard({
 
   const saveMilestoneDate = useCallback(
     async (key: MilestoneKey, date: string) => {
-      if (!date) {
+     if (!date) {
         toast.show("Pick a date first");
+        return;
+      }
+      const today = new Date().toISOString().split("T")[0];
+      if (date > today) {
+        toast.show("Milestone date cannot be in the future");
         return;
       }
       setMilestoneSaving(key);
@@ -142,11 +152,12 @@ export function ProfileCompletenessCard({
                 <label className="pc-field-label" htmlFor="pc-aor">
                   AOR date
                 </label>
-                <input
+               <input
                   id="pc-aor"
                   type="date"
                   className="aor-date-input"
                   value={draft.aorDate}
+                  max={new Date().toISOString().split("T")[0]}
                   onChange={(e) =>
                     setDraft((d) => ({ ...d, aorDate: e.target.value }))
                   }
@@ -282,11 +293,12 @@ function MilestoneDateRow({
 
   return (
     <div className="pc-date-row">
-      <input
+     <input
         type="date"
         className="aor-date-input"
         aria-label="Milestone completion date"
         value={val}
+        max={new Date().toISOString().split("T")[0]}
         disabled={busy}
         onChange={(e) => setVal(e.target.value)}
       />
