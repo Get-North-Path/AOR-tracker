@@ -32,6 +32,7 @@ import {
   FaChartLine,
   FaHome,
   FaUpload,
+  FaMagic,
 } from "react-icons/fa";
 
 /* ─── Sidebar ─── */
@@ -58,6 +59,7 @@ export const IconCheckCircle = FaCheckCircle;
 export const IconClose = FaTimes;
 export const IconInfo = FaInfoCircle;
 export const IconSync = FaSyncAlt; // "⟳"   in-progress dot
+export const IconMagic = FaMagic;
 
 /* ─── Timeline ─── */
 export const IconEdit = FaPencilAlt;

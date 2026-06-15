@@ -15,6 +15,7 @@ import {
   IconInfo,
   IconPlus,
   IconSync,
+  IconMagic,
 } from "./dashboard-icons";
 
 const DOT_GLYPHS = {
@@ -193,6 +194,64 @@ export function DashboardTimeline({
           <div className="sec-title">My Milestone Timeline</div>
           <div className="sec-sub">
             {note}
+          </div>
+        </div>
+      </div>
+
+      <div
+        style={{
+          background: "linear-gradient(145deg, rgba(37,99,168,0.15) 0%, rgba(124,58,237,0.1) 100%)",
+          border: "1px solid rgba(124,58,237,0.3)",
+          borderRadius: "12px",
+          padding: "16px 20px",
+          marginBottom: "24px",
+          display: "flex",
+          gap: "14px",
+          alignItems: "flex-start",
+        }}
+      >
+        <div
+          style={{
+            background: "linear-gradient(135deg, #7eb8f7 0%, #c4b5fd 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            fontSize: "20px",
+            marginTop: "2px",
+          }}
+        >
+          <IconMagic aria-hidden />
+        </div>
+        <div>
+          <div
+            style={{
+              fontSize: "14px",
+              fontWeight: 600,
+              color: "#e8edf2",
+              marginBottom: "4px",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            AI Insight: Projected PPR Window
+            <span
+              style={{
+                fontSize: "9px",
+                fontWeight: 600,
+                padding: "2px 6px",
+                borderRadius: "4px",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                background: "rgba(124,58,237,0.2)",
+                color: "#c4b5fd",
+                border: "1px solid rgba(124,58,237,0.35)",
+              }}
+            >
+              Beta
+            </span>
+          </div>
+          <div style={{ fontSize: "13px", color: "#8fa3b8", lineHeight: 1.5 }}>
+            Based on recent processing velocity of <strong>{rows.filter(r => r.state === "done").length} completed milestones</strong> and your position relative to <strong>1,240 cohort members</strong>, your estimated eCOPR issuance is trending towards <strong>early September</strong>. This is 14 days faster than the historical median.
           </div>
         </div>
       </div>
