@@ -552,3 +552,11 @@ export const DN_NO_EMAIL_WARN = {
   linkHref: "/profile/add-email",
   trailing: "to resume from any device.",
 };
+
+export type DnAnomalyAlert = {
+  id: string;
+  title: string;
+  description: string;
+  severity: "info" | "warning" | "critical";
+};
+

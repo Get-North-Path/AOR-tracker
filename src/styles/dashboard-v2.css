@@ -632,6 +632,63 @@
   flex-shrink: 0;
 }
 
+/* ─── ANOMALY ALERTS ─────────────────────────────────────────────────── */
+.dashboard-v2-page .anomaly-alerts-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.dashboard-v2-page .anomaly-alert-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid;
+}
+.dashboard-v2-page .anomaly-alert-icon {
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.dashboard-v2-page .anomaly-alert-content {
+  flex: 1;
+}
+.dashboard-v2-page .anomaly-alert-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.dashboard-v2-page .anomaly-alert-desc {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+.dashboard-v2-page .anomaly-alert-card.info {
+  border-color: #60a5fa;
+  background: #eff6ff;
+  color: #1e40af;
+}
+.dashboard-v2-page .anomaly-alert-card.info .anomaly-alert-icon {
+  color: #3b82f6;
+}
+.dashboard-v2-page .anomaly-alert-card.warning {
+  border-color: #f59e0b;
+  background: #fffbeb;
+  color: #854d0e;
+}
+.dashboard-v2-page .anomaly-alert-card.warning .anomaly-alert-icon {
+  color: #d97706;
+}
+.dashboard-v2-page .anomaly-alert-card.critical {
+  border-color: #ef4444;
+  background: #fef2f2;
+  color: #991b1b;
+}
+.dashboard-v2-page .anomaly-alert-card.critical .anomaly-alert-icon {
+  color: #dc2626;
+}
+
 /* ─── JOURNEY PROGRESS ───────────────────────────────────────────────── */
 .dashboard-v2-page .progress-section {
   background: #fff;
