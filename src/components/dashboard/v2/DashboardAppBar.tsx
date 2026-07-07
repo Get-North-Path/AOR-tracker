@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { WebsiteLogo } from "@/components/WebsiteLogo";
 import { DN_PROFILE } from "./data";
-import { IconPlus, IconSync, IconUpload } from "./dashboard-icons";
+import { IconPlus, IconSync, IconUpload, IconWhatsapp } from "./dashboard-icons";
 
 /**
  * Sticky dark app-bar that sits at the top of the dashboard page.
@@ -23,6 +23,8 @@ export function DashboardAppBar({
   timelineHref,
   onSyncCohorts,
   syncCohortBusy = false,
+  onOpenWhatsappLinks,
+  whatsappBadge = false,
 }: {
   applicantId?: string;
   cohortLabel?: string;
@@ -33,6 +35,8 @@ export function DashboardAppBar({
   /** Rebuild `cohort_stats` from all profiles (live dashboard only). */
   onSyncCohorts?: () => void;
   syncCohortBusy?: boolean;
+  onOpenWhatsappLinks?: () => void;
+  whatsappBadge?: boolean;
 } = {}) {
   const router = useRouter();
 
@@ -84,6 +88,25 @@ export function DashboardAppBar({
             
               {syncCohortBusy ? "Syncing…" : "Sync cohorts"}
             
+          </button>
+        ) : null}
+        {onOpenWhatsappLinks ? (
+          <button
+            type="button"
+            className="dnb-btn dnb-btn-wa"
+            title="WhatsApp community groups"
+            aria-label="WhatsApp community groups"
+            onClick={onOpenWhatsappLinks}
+          >
+            <span className="dnb-wa-wrap">
+              <IconWhatsapp aria-hidden />
+              {whatsappBadge ? (
+                <span className="dnb-wa-badge" aria-hidden>
+                  2
+                </span>
+              ) : null}
+            </span>
+            <span className="dnb-btn-label">WhatsApp</span>
           </button>
         ) : null}
         <button
