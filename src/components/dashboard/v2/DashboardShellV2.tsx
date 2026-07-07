@@ -60,7 +60,9 @@ import type {
 import { DashboardAppBar } from "./DashboardAppBar";
 import { DashboardSidebar } from "./DashboardSidebar";
 import { DashboardToaster } from "./DashboardToaster";
+import { DashboardWhatsappLinksModal } from "./DashboardWhatsappLinksModal";
 import { DashboardV2UiProvider } from "./DashboardV2Context";
+import { shouldAutoOpenWhatsappLinks } from "./whatsapp-links";
 import { profileVM, sidebarSectionsVM } from "./live-vm";
 import {
   pickActiveDashboardSection,
@@ -111,6 +113,9 @@ export function DashboardShellV2({ children }: { children: ReactNode }) {
   const [queueAhead, setQueueAhead] = useState(0);
   const [milestonePace, setMilestonePace] =
     useState<GlobalMilestonePace | null>(null);
+  const [whatsappModalOpen, setWhatsappModalOpen] = useState(false);
+  const [whatsappBadge, setWhatsappBadge] = useState(true);
+  const whatsappAutoOpenedRef = useRef(false);
 
   const hydrateCohortView = useCallback(
     async (viewKey: string, peerRootKey: string) => {
@@ -448,9 +453,27 @@ export function DashboardShellV2({ children }: { children: ReactNode }) {
     };
   }, [pathname, profile, profile?.updatedAt]);
 
+  useEffect(() => {
+    if (!profile || whatsappAutoOpenedRef.current) return;
+    whatsappAutoOpenedRef.current = true;
+    if (shouldAutoOpenWhatsappLinks()) {
+      setWhatsappModalOpen(true);
+    }
+  }, [profile]);
+
   if (!profile || !cohort || !cohortDisplay || !email || !dnProfile) {
     return <DashboardLoadingSkeleton />;
   }
+
+  const openWhatsappLinks = () => {
+    setWhatsappModalOpen(true);
+    setWhatsappBadge(false);
+  };
+
+  const closeWhatsappLinks = () => {
+    setWhatsappModalOpen(false);
+    setWhatsappBadge(false);
+  };
 
   const ctxValue = {
     email,
@@ -506,6 +529,13 @@ export function DashboardShellV2({ children }: { children: ReactNode }) {
             timelineHref="/dashboard"
             onSyncCohorts={() => void syncCohortStats()}
             syncCohortBusy={syncCohortBusy}
+            onOpenWhatsappLinks={openWhatsappLinks}
+            whatsappBadge={whatsappBadge}
+          />
+
+          <DashboardWhatsappLinksModal
+            open={whatsappModalOpen}
+            onClose={closeWhatsappLinks}
           />
 
           <div className="dlay">
