@@ -324,7 +324,9 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   };
 
   const onSaveMilestone = async (key: MilestoneKey, val: string) => {
-    if (!email || !val) return;
+    if (!email) return;
+    const dateToSave=val.trim() ||null;
+    const res=await updateMilestoneAction(email,key,dateToSave);
     const res = await updateMilestoneAction(email, key, val);
     if (res.ok && res.profile) {
       setProfile(res.profile);
@@ -338,7 +340,11 @@ export function DashboardShell({ children }: { children: ReactNode }) {
       }
       const vk = key === "aor" ? pk : (viewingCohortKeyOverride ?? pk);
       await hydrateCohortView(vk, pk);
-      toast.show(`${MILESTONE_DEFS.find((m) => m.key === key)?.label} date saved`);
+     toast.show(
+  dateToSave
+    ? `${MILESTONE_DEFS.find((m) => m.key === key)?.label} date saved`
+    : `${MILESTONE_DEFS.find((m) => m.key === key)?.label} date cleared`
+);
     }
   };
 
