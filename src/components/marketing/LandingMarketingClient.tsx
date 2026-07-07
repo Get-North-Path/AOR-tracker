@@ -9,6 +9,7 @@ import { LandingFeaturesSection } from "@/components/marketing/landing/LandingFe
 import { LandingGrowthSection } from "@/components/marketing/landing/LandingGrowthSection";
 import { LandingHeroSection } from "@/components/marketing/landing/LandingHeroSection";
 import { LandingSeoIntroSection } from "@/components/marketing/landing/LandingSeoIntroSection";
+import { LandingLiveFeedSection } from "@/components/marketing/landing/LandingLiveFeedSection";
 import { LandingHowItWorksSection } from "@/components/marketing/landing/LandingHowItWorksSection";
 import { LandingLoadingAnimation } from "@/components/landing/LandingLoadingAnimation";
 import { LandingMessagingSection } from "@/components/marketing/landing/LandingMessagingSection";
@@ -63,6 +64,7 @@ export function LandingMarketingClient() {
       <LandingHeroSection profileCount={profileCount} />
       <LandingSeoIntroSection profileCount={profileCount} />
       <LandingStatsBar profileCount={profileCount} medianSample={medianSample} />
+      <LandingLiveFeedSection />
       <LandingHowItWorksSection />
       <LandingFeaturesSection />
       <LandingCohortSection />
