@@ -12,7 +12,6 @@ import {
   IconCheck,
   IconCheckCircle,
   IconEdit,
-  IconInfo,
   IconPlus,
   IconSync,
 } from "./dashboard-icons";
@@ -192,8 +191,7 @@ export function DashboardTimeline({
         <div>
           <div className="sec-title">My Milestone Timeline</div>
           <div className="sec-sub">
-            Hover any row to edit your date   updates are community-verified before
-            contributing to community stats
+            {note}
           </div>
         </div>
       </div>

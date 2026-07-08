@@ -19,8 +19,7 @@ import {
   computeGlobalSeededMilestonePace,
   milestonePaceFilter,
 } from "@/lib/milestone-gap-estimates";
-import { emptyCohortStats } from "@/lib/seed";
-import type { CohortStats, MilestoneKey } from "@/lib/types";
+import type { MilestoneKey } from "@/lib/types";
 
 function profileFieldsFromDoc(doc: Record<string, unknown>): ProfileForStats & {
   stream: string;
@@ -82,7 +81,6 @@ function aggregateOneCohort(
   cutoffIso: string,
   p1Global: ReturnType<typeof computeP1Percentiles>,
 ): Record<string, unknown> {
-  const empty = emptyCohortStats(cohortKey);
   const distResult = computeCohortDistribution(
     cohortProfiles.map(toProfileForStats),
     cutoffIso,
