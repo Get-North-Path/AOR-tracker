@@ -259,7 +259,7 @@ export function TrackStep3Review(props: Props) {
         <span className="tk-consent-text">
           I agree to the{" "}
           <a
-            href="/privacy"
+            href="https://www.getnorthpath.com/privacy"
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
