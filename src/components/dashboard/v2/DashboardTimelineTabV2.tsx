@@ -11,6 +11,7 @@ import { DashboardHistogram } from "./DashboardHistogram";
 import { DashboardPprBar } from "./DashboardPprBar";
 import { DashboardRings } from "./DashboardRings";
 import { DashboardShareSection } from "./DashboardShareSection";
+import { SmartIntelligencePanelV2 } from "./SmartIntelligencePanelV2";
 import { DashboardTimeline } from "./DashboardTimeline";
 import {
   cohortBarsVM,
@@ -66,6 +67,8 @@ export function DashboardTimelineTabV2() {
       <DashboardHeroBar stats={heroStats} />
       <DashboardRings cards={infoCards} />
       <DashboardPprBar journey={journeyProgress} />
+      
+      <SmartIntelligencePanelV2 />
       
       <DashboardTimeline
         rows={timelineRows}

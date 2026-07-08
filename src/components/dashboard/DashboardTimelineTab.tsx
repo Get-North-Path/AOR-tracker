@@ -4,6 +4,7 @@ import { FaArrowLeft, FaArrowUp, FaCheck } from "react-icons/fa";
 import { useDashboard } from "@/components/dashboard/DashboardContext";
 import { DashboardRails } from "@/components/dashboard/DashboardRails";
 import { ProfileCompletenessCard } from "@/components/dashboard/ProfileCompletenessCard";
+import { SmartIntelligencePanel } from "@/components/dashboard/SmartIntelligencePanel";
 import type { MilestoneDefRow } from "@/lib/cohort-dynamic";
 import type { MilestoneKey } from "@/lib/types";
 import { fmtDate, fmtShortUpdated } from "@/lib/format";
@@ -123,6 +124,8 @@ export function DashboardTimelineTab() {
           onProfileUpdated={refreshAfterProfileUpdate}
         />
       ) : null}
+
+      <SmartIntelligencePanel />
 
       <div className="card card-timeline">
         <div className="chd">

@@ -46,10 +46,13 @@ describe("resolveApprovalEstimate", () => {
       p75_days: 80,
       n_verified: 100,
       n_eligible: 100,
-      completion_rate: 0,
-      weekly_delta: 0,
-      last_updated: "2026-05-01",
+      completion_rate: 0.5,
+      weekly_delta: 0.1,
+      last_updated: new Date().toISOString(),
       stream_medians: [],
+      per_milestone_n: {},
+      dist: [],
+      pulseWeekly: []
     }, pace);
 
     assert.equal(est.windowLabel, "Sep 2026");
