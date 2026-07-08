@@ -1,6 +1,6 @@
 "use client";
 
-import { FaArrowLeft, FaArrowUp, FaCheck } from "react-icons/fa";
+import { FaArrowLeft, FaArrowUp, FaCheck, FaTwitter, FaLinkedin } from "react-icons/fa";
 import { useDashboard } from "@/components/dashboard/DashboardContext";
 import { DashboardRails } from "@/components/dashboard/DashboardRails";
 import { ProfileCompletenessCard } from "@/components/dashboard/ProfileCompletenessCard";
@@ -50,6 +50,18 @@ export function DashboardTimelineTab() {
     cohortDataSparse,
     selectCohort,
   } = useDashboard();
+
+  const hasPPR = !!(profile.milestones["p1"]?.date || profile.milestones["p2"]?.date || profile.milestones["ecopr"]?.date);
+  
+  let aorMonth = "";
+  if (profile.aorDate) {
+    const m = parseInt(profile.aorDate.slice(5, 7), 10);
+    if (!isNaN(m) && m >= 1 && m <= 12) {
+      aorMonth = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][m - 1] + " AOR";
+    }
+  }
+
+  const shareText = `Just got my Canadian PR! \uD83C\uDF41 Day ${days}, ${profile.stream}, ${aorMonth} tracked with @AORTrack: track.getnorthpath.com #CanadaImmigration`;
 
   return (
     <div className="flex flex-col gap-4">
@@ -122,6 +134,35 @@ export function DashboardTimelineTab() {
           completeness={completeness}
           onProfileUpdated={refreshAfterProfileUpdate}
         />
+      ) : null}
+
+      {hasPPR ? (
+        <div className="card border border-[#5de494]/20 bg-[#5de494]/5 p-4 sm:p-5">
+          <div className="mb-2 text-base font-bold text-[var(--w)]">
+            &#127881; You made it! Share your result
+          </div>
+          <p className="mb-4 text-sm text-[var(--t2)]">
+            Help the community by sharing your timeline. It helps other applicants know what to expect!
+          </p>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <a
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 rounded bg-[var(--w)] px-4 py-2 text-sm font-bold text-[var(--bg)] transition-opacity hover:opacity-80"
+            >
+              <FaTwitter aria-hidden /> Share on X
+            </a>
+            <a
+              href={`https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(shareText)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 rounded bg-[#0a66c2] px-4 py-2 text-sm font-bold text-white transition-opacity hover:opacity-80"
+            >
+              <FaLinkedin aria-hidden /> Share on LinkedIn
+            </a>
+          </div>
+        </div>
       ) : null}
 
       <div className="card card-timeline">
