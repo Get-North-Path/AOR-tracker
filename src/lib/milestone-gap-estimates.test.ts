@@ -49,7 +49,7 @@ function profile(
 }
 
 describe("computeGlobalSeededMilestonePace", () => {
-  it("averages segment gaps and sums to eCOPR total", () => {
+  it("aggregates segment gaps and sums to eCOPR total", () => {
     const pace = computeGlobalSeededMilestonePace([
       profile({
         biometrics: 20,
@@ -102,6 +102,21 @@ describe("computeGlobalSeededMilestonePace", () => {
     }
     assert.equal(pace.total_avg_days_to_ecopr, sum);
     assert.equal(pace.cumulative_avg_days.ecopr, sum);
+  });
+
+  it("uses the median so a single extreme outlier does not inflate the estimate", () => {
+    // Four typical ~30d biometrics gaps plus one stuck 400d applicant.
+    const pace = computeGlobalSeededMilestonePace([
+      profile({ biometrics: 30 }),
+      profile({ biometrics: 28 }),
+      profile({ biometrics: 30 }),
+      profile({ biometrics: 32 }),
+      profile({ biometrics: 400 }),
+    ]);
+
+    // A mean would be (30+28+30+32+400)/5 = 104; the median stays at 30.
+    assert.equal(pace.segment_n.biometrics, 5);
+    assert.equal(pace.segment_avg_days.biometrics, 30);
   });
 });
 
