@@ -73,18 +73,33 @@ export function DashboardShareTab() {
           Anyone with the link can view this read-only snapshot   no sign-in
           required.
         </p>
+       
         <div className="shopts">
           <button
             type="button"
             className="shopt"
-            onClick={() => toast.show("WhatsApp deep link (placeholder)")}
+            disabled={!shareUrl}
+            onClick={() => {
+              const text = `Tracking my Canadian PR journey — Day ${days} of ~${median}. Check my timeline:`;
+              window.open(
+                `https://wa.me/?text=${encodeURIComponent(text + " " + shareUrl)}`,
+                "_blank",
+              );
+            }}
           >
             <FaWhatsapp aria-hidden /> WhatsApp
           </button>
           <button
             type="button"
             className="shopt"
-            onClick={() => toast.show("Reddit format (placeholder)")}
+            disabled={!shareUrl}
+            onClick={() => {
+              const title = `My Canadian PR timeline — Day ${days}, Est. PPR: ${ppr?.p50Approx ?? "TBD"}`;
+              window.open(
+                `https://www.reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(title)}`,
+                "_blank",
+              );
+            }}
           >
             <FaRedditAlien aria-hidden /> Reddit
           </button>
