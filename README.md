@@ -84,7 +84,6 @@ Built to stay fast and transparent at the edge of a messy, real-world dataset:
 - 🌐 **Live tracker:** [track.getnorthpath.com](https://track.getnorthpath.com)
 - ▶️ **Start tracking:** [track.getnorthpath.com/track](https://track.getnorthpath.com/track)
 - 📊 **Dashboard:** [track.getnorthpath.com/dashboard](https://track.getnorthpath.com/dashboard)
-- 📈 **Processing stats:** [track.getnorthpath.com/dashboard/stats](https://track.getnorthpath.com/dashboard/stats)
 - 🧑‍🤝‍🧑 **Community:** [track.getnorthpath.com/community](https://track.getnorthpath.com/community)
 - 🗺️ **Roadmap:** [track.getnorthpath.com/roadmap](https://track.getnorthpath.com/roadmap)
 - 📜 **Changelog:** [track.getnorthpath.com/changelog](https://track.getnorthpath.com/changelog)
