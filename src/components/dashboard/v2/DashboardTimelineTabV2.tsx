@@ -21,7 +21,9 @@ import {
   infoCardsVM,
   journeyProgressVM,
   timelineRowsVM,
+  anomalyAlertsVM,
 } from "./live-vm";
+import { DashboardAnomalyAlerts } from "./DashboardAnomalyAlerts";
 import { humanizeCohortKey } from "@/lib/cohort";
 import { applicantIdFromEmail } from "@/lib/share-timeline-vm";
 import type { MilestoneKey } from "@/lib/types";
@@ -56,6 +58,10 @@ export function DashboardTimelineTabV2() {
   const hist = useMemo(() => histVM(ctx), [ctx]);
   const histSubtitle = useMemo(() => histSubtitleVM(ctx), [ctx]);
   const dotMap = useMemo(() => dotMapVM(ctx), [ctx]);
+  const anomalyAlerts = useMemo(
+    () => anomalyAlertsVM(ctx),
+    [ctx]
+  );
 
   const onSaveDate = async (key: string, value: string) => {
     await ctx.onSaveMilestone(key as MilestoneKey, value);
@@ -64,6 +70,7 @@ export function DashboardTimelineTabV2() {
   return (
     <>
       <DashboardHeroBar stats={heroStats} />
+      <DashboardAnomalyAlerts alerts={anomalyAlerts} />
       <DashboardRings cards={infoCards} />
       <DashboardPprBar journey={journeyProgress} />
       

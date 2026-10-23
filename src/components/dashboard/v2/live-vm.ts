@@ -40,6 +40,7 @@ import type {
   DnTimelineRow,
   SidebarItem,
   SidebarSections,
+  DnAnomalyAlert,
 } from "./data";
 
 /* ─── PROFILE / IDENTITY ────────────────────────────────────────────── */
@@ -530,3 +531,61 @@ export function sidebarSectionsVM({
 
   return { dashboard, community, share, profile };
 }
+
+export function anomalyAlertsVM(
+  ctx: Pick<DashboardContextValue, "cohort" | "cohortTotal">
+): DnAnomalyAlert[] {
+  const alerts: DnAnomalyAlert[] = [];
+
+  // Determine weekly delta with existing weekly_delta priority, pulseWeekly fallback
+  let weeklyDelta = 0;
+  let hasWeeklyDelta = false;
+
+  if (ctx.cohort.weekly_delta !== undefined && ctx.cohort.weekly_delta !== null) {
+    weeklyDelta = Math.round(ctx.cohort.weekly_delta * 100);
+    hasWeeklyDelta = true;
+  } else {
+    const weekly = ctx.cohort.pulseWeekly ?? [];
+    if (weekly.length >= 2) {
+      const current = weekly[weekly.length - 1];
+      const previous = weekly[weekly.length - 2];
+      if (previous > 0) {
+        weeklyDelta = Math.round(((current - previous) / previous) * 100);
+        hasWeeklyDelta = true;
+      }
+    }
+  }
+
+  if (hasWeeklyDelta) {
+    if (weeklyDelta < -30) {
+      alerts.push({
+        id: "approval-drop",
+        title: "Approval slowdown detected",
+        description: `${Math.abs(weeklyDelta)}% fewer approvals than last week.`,
+        severity: "warning",
+      });
+    } else if (weeklyDelta > 50) {
+      alerts.push({
+        id: "approval-spike",
+        title: "Approval surge detected",
+        description: `${weeklyDelta}% more approvals than last week.`,
+        severity: "info",
+      });
+    }
+  }
+
+  if (
+    (ctx.cohort.n_verified ?? 0) > 500 &&
+    (ctx.cohort.n_completed ?? 0) < 20
+  ) {
+    alerts.push({
+      id: "backlog",
+      title: "Potential processing backlog",
+      description: "Large cohort size with unusually low completion rate.",
+      severity: "critical",
+    });
+  }
+
+  return alerts;
+}
+
